@@ -60,9 +60,9 @@ def create_labels(output_file, binary=False):
     label.to_csv(output_file, sep=',', na_rep='N/A', header=True, index=True)
 
 
-def combine_msg_template(input_file):
-    df = pd.read_csv('Intrepid_RAS_0901_0908_scrubbed_with_unique_id.csv')
-    df_msg_structured = pd.read_csv('Intrepid_RAS_0901_0908_scrubbed_with_unique_id_msg_only.csv_structured.csv')
+def combine_msg_template(input_file,msg_only_structured):
+    df = pd.read_csv(input_file)
+    df_msg_structured = pd.read_csv(msg_only_structured)
     df_msg_structured = df_msg_structured.drop(['LineId', 'LineID'], axis=1)
     df = df[1:len(df_msg_structured)]
     df_merged = pd.concat([df, df_msg_structured], axis=1)
@@ -91,6 +91,9 @@ if __name__ == '__main__':
     parse_util(input_dir, log_name, [], log_format)
 
     # Create binary/multiclass label
-    create_labels(True,)
+    create_labels('Intrepid_RAS_binary_label.csv')
+    create_labels('Intrepid_RAS_binary_label.csv', True)
 
-
+    # Combine the msg together
+    msg_only_structured = ' '
+    combine_msg_template(full_log, msg_only_structured)
