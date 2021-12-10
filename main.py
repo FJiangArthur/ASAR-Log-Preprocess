@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import gdown
 from parse import parse_util
-from DatasetSpecific.ras_parse import parse as process_ras
+from dataset_specific.ras_parse import parse as process_ras
 
 
 def save_to_csv(json_input, full_log, msg_only):
